@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoTrip - Hotéis e Experiências</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="container navbar">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="GoTrip Logo" id="logo-img">
+                    <span>GoTrip</span>
+                </a>
+            </div>
+
+            <!-- Menu -->
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="sobre.html">Sobre</a>
+                <a href="reserva.html">Reservar</a>
+            </nav>
+
+            <!-- Login -->
+            <div class="auth">
+                <a href="#" class="btn-login">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>GoTrip</h2>
+            <p>Sua próxima viagem inesquecível começa aqui</p>
+            
+            <div class="search-box">
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="destino">Destino ou Nome do Hotel</label>
+                        <input type="text" id="destino" placeholder="Ex: Rio de Janeiro, São Paulo...">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checkin">Check-in</label>
+                            <input type="date" id="checkin">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout">Check-out</label>
+                            <input type="date" id="checkout">
+                        </div>
+                        <div class="form-group">
+                            <label for="hosp">Hóspedes</label>
+                            <select id="hosp">
+                                <option value="1">1 hóspede</option>
+                                <option value="2" selected>2 hóspedes</option>
+                                <option value="3">3 hóspedes</option>
+                                <option value="4">4 hóspedes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Buscar Hotéis</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destaques -->
+    <section class="destaques">
+        <div class="container">
+            <h2>Hotéis em Destaque</h2>
+            <div class="cards" id="cards-destaques">
+                <p class="loading">Carregando hotéis em destaque...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GoTrip - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
