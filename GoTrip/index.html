@@ -23,12 +23,13 @@
             <nav>
                 <a href="index.html">Home</a>
                 <a href="sobre.html">Sobre</a>
-                <a href="reserva.html">Reservar</a>
+                <a href="#destaques">Explorar</a>
             </nav>
 
-            <!-- Login -->
+            <!-- Auth -->
             <div class="auth">
                 <a href="#" class="btn-login">Login</a>
+                <a href="#" class="btn-signup">Cadastro</a>
             </div>
         </div>
     </header>
@@ -36,53 +37,334 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h2>GoTrip</h2>
-            <p>Sua próxima viagem inesquecível começa aqui</p>
+            <h1>Encontre o Perfeito Hotel para Você</h1>
+            <p>Milhares de hotéis com os melhores preços garantidos</p>
             
+            <!-- Search Box Principal -->
             <div class="search-box">
                 <form id="searchForm">
-                    <div class="form-group">
-                        <label for="destino">Destino ou Nome do Hotel</label>
-                        <input type="text" id="destino" placeholder="Ex: Rio de Janeiro, São Paulo...">
-                    </div>
-                    <div class="form-row">
+                    <div class="search-grid">
                         <div class="form-group">
-                            <label for="checkin">Check-in</label>
+                            <label for="destino">
+                                <span class="icon">📍</span> Destino
+                            </label>
+                            <input type="text" id="destino" placeholder="Cidade, hotel ou bairro..." autocomplete="off">
+                            <div class="autocomplete-dropdown" id="autocomplete-destinos" style="display:none;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checkin">
+                                <span class="icon">📅</span> Check-in
+                            </label>
                             <input type="date" id="checkin">
                         </div>
+
                         <div class="form-group">
-                            <label for="checkout">Check-out</label>
+                            <label for="checkout">
+                                <span class="icon">📅</span> Check-out
+                            </label>
                             <input type="date" id="checkout">
                         </div>
+
                         <div class="form-group">
-                            <label for="hosp">Hóspedes</label>
-                            <select id="hosp">
-                                <option value="1">1 hóspede</option>
-                                <option value="2" selected>2 hóspedes</option>
-                                <option value="3">3 hóspedes</option>
-                                <option value="4">4 hóspedes</option>
+                            <label for="hospedes">
+                                <span class="icon">👥</span> Hóspedes
+                            </label>
+                            <select id="hospedes">
+                                <option value="1">1 hóspede - 1 quarto</option>
+                                <option value="2" selected>2 hóspedes - 1 quarto</option>
+                                <option value="3">3 hóspedes - 1 quarto</option>
+                                <option value="4">4 hóspedes - 1 quarto</option>
+                                <option value="5">5+ hóspedes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estrelas">
+                                <span class="icon">⭐</span> Categoria
+                            </label>
+                            <select id="estrelas">
+                                <option value="">Todas as categorias</option>
+                                <option value="5">5 estrelas</option>
+                                <option value="4">4+ estrelas</option>
+                                <option value="3">3+ estrelas</option>
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary">Buscar Hotéis</button>
+
+                    <div class="search-actions">
+                        <button type="submit" class="btn-primary btn-large">
+                            🔍 Buscar Hotéis
+                        </button>
+                        <button type="button" class="btn-secondary" id="toggleAdvanced">
+                            Filtros Avançados
+                        </button>
+                    </div>
+
+                    <!-- Filtros Avançados -->
+                    <div class="advanced-filters" id="advancedFilters" style="display:none;">
+                        <div class="filters-grid">
+                            <div class="filter-group">
+                                <label for="preco-min">Preço Mínimo (R$)</label>
+                                <input type="number" id="preco-min" placeholder="0" min="0">
+                            </div>
+                            <div class="filter-group">
+                                <label for="preco-max">Preço Máximo (R$)</label>
+                                <input type="number" id="preco-max" placeholder="10000" min="0">
+                            </div>
+                            <div class="filter-group">
+                                <label for="tipo-quarto">Tipo de Quarto</label>
+                                <select id="tipo-quarto">
+                                    <option value="">Qualquer tipo</option>
+                                    <option value="single">Single</option>
+                                    <option value="double">Double</option>
+                                    <option value="suite">Suite</option>
+                                    <option value="presidencial">Presidencial</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>
+                                    <input type="checkbox" id="filtro-wifi"> WiFi Grátis
+                                </label>
+                            </div>
+                            <div class="filter-group">
+                                <label>
+                                    <input type="checkbox" id="filtro-piscina"> Piscina
+                                </label>
+                            </div>
+                            <div class="filter-group">
+                                <label>
+                                    <input type="checkbox" id="filtro-academia"> Academia
+                                </label>
+                            </div>
+                            <div class="filter-group">
+                                <label>
+                                    <input type="checkbox" id="filtro-restaurante"> Restaurante
+                                </label>
+                            </div>
+                            <div class="filter-group">
+                                <label>
+                                    <input type="checkbox" id="filtro-estacionamento"> Estacionamento
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Destaques -->
-    <section class="destaques">
+    <!-- Destaques Rápidos -->
+    <section class="quick-stats">
         <div class="container">
-            <h2>Hotéis em Destaque</h2>
-            <div class="cards" id="cards-destaques">
-                <p class="loading">Carregando hotéis em destaque...</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon">🏨</span>
+                    <div class="stat-content">
+                        <strong id="total-hoteis">2.500+</strong>
+                        <p>Hotéis Disponíveis</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">⭐</span>
+                    <div class="stat-content">
+                        <strong id="total-reviews">150k+</strong>
+                        <p>Avaliações Verificadas</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">💰</span>
+                    <div class="stat-content">
+                        <strong>Melhor Preço</strong>
+                        <p>Garantido</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🎁</span>
+                    <div class="stat-content">
+                        <strong>Ofertas</strong>
+                        <p>Exclusivas Todo Dia</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Ofertas Especiais -->
+    <section class="ofertas-especiais" id="ofertas">
+        <div class="container">
+            <h2>Ofertas Especiais 🎉</h2>
+            <div class="cards-carousel" id="cards-ofertas">
+                <p class="loading">Carregando ofertas...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hotéis Populares -->
+    <section class="populares" id="destaques">
+        <div class="container">
+            <h2>Hotéis Populares ⭐</h2>
+            <div class="cards-grid" id="cards-populares">
+                <p class="loading">Carregando hotéis populares...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hotéis Recomendados -->
+    <section class="recomendados">
+        <div class="container">
+            <h2>Recomendados para Você 💡</h2>
+            <div class="cards-grid" id="cards-recomendados">
+                <p class="loading">Carregando recomendações...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Disponíveis -->
+    <section class="servicos">
+        <div class="container">
+            <h2>Serviços Oferecidos nos Hotéis</h2>
+            <div class="servicos-grid" id="servicos-list">
+                <div class="servico-card">
+                    <span class="servico-icon">🏊</span>
+                    <h3>Piscina</h3>
+                    <p>Relaxe em nossa piscina aquecida</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-icon">🍽️</span>
+                    <h3>Restaurante</h3>
+                    <p>Culinária internacional premium</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-icon">💪</span>
+                    <h3>Academia</h3>
+                    <p>Equipamento completo 24h</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-icon">🛁</span>
+                    <h3>Spa</h3>
+                    <p>Massagem e tratamentos relaxantes</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-icon">🎾</span>
+                    <h3>Quadra de Esportes</h3>
+                    <p>Tennis, vôlei e outros</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-icon">📶</span>
+                    <h3>WiFi Premium</h3>
+                    <p>Conexão rápida e estável</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-icon">🚗</span>
+                    <h3>Estacionamento</h3>
+                    <p>Gratuito ou com desconto</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-icon">🎄</span>
+                    <h3>Eventos</h3>
+                    <p>Salas para conferências e festas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinos Populares -->
+    <section class="destinos">
+        <div class="container">
+            <h2>Destinos Mais Procurados 🌍</h2>
+            <div class="destinos-grid" id="destinos-list">
+                <div class="destino-card">
+                    <img src="https://picsum.photos/id/10/300/200" alt="Rio de Janeiro">
+                    <div class="destino-info">
+                        <h3>Rio de Janeiro</h3>
+                        <span>2.450 hotéis</span>
+                    </div>
+                </div>
+                <div class="destino-card">
+                    <img src="https://picsum.photos/id/20/300/200" alt="São Paulo">
+                    <div class="destino-info">
+                        <h3>São Paulo</h3>
+                        <span>1.890 hotéis</span>
+                    </div>
+                </div>
+                <div class="destino-card">
+                    <img src="https://picsum.photos/id/30/300/200" alt="Salvador">
+                    <div class="destino-info">
+                        <h3>Salvador</h3>
+                        <span>645 hotéis</span>
+                    </div>
+                </div>
+                <div class="destino-card">
+                    <img src="https://picsum.photos/id/40/300/200" alt="Recife">
+                    <div class="destino-info">
+                        <h3>Recife</h3>
+                        <span>523 hotéis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Receba Ofertas Exclusivas ✉️</h2>
+                <p>Inscreva-se em nossa newsletter para receber as melhores ofertas antes de qualquer pessoa</p>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" placeholder="Seu e-mail" required>
+                    <button type="submit" class="btn-primary">Inscrever</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 GoTrip - Todos os direitos reservados</p>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>GoTrip</h4>
+                    <ul>
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Viajantes</h4>
+                    <ul>
+                        <li><a href="#">Minhas Reservas</a></li>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Parceiros</h4>
+                    <ul>
+                        <li><a href="#">Gerencie seu Hotel</a></li>
+                        <li><a href="#">Para Hotéis</a></li>
+                        <li><a href="#">Publicidade</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li>📧 contato@gotrip.com</li>
+                        <li>📱 0800 123 4567</li>
+                        <li>🌐 www.gotrip.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 GoTrip - Todos os direitos reservados</p>
+                <div class="footer-links">
+                    <a href="#">Termos de Uso</a> | 
+                    <a href="#">Privacidade</a> | 
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
         </div>
     </footer>
 
